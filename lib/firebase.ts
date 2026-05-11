@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { cert, getApps, initializeApp, applicationDefault } from "firebase-admin/app";
+import { cert, getApp, initializeApp, applicationDefault, type App } from "firebase-admin/app";
 import { getFirestore, type Firestore } from "firebase-admin/firestore";
 import type {
   AnalysisRecord,
@@ -73,6 +73,23 @@ function firestoreResult<T>(record: T): Persisted<T> {
   return { record, persistence: "firestore" };
 }
 
+function getOrInitializeDefaultApp(projectId: string): App {
+  try {
+    return getApp();
+  } catch {
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+    const privateKey = privateKeyFromEnv();
+
+    return initializeApp({
+      projectId,
+      credential:
+        clientEmail && privateKey
+          ? cert({ projectId, clientEmail, privateKey })
+          : applicationDefault()
+    });
+  }
+}
+
 export function getAdminDb() {
   if (globalStore.__hypeToHelpDb !== undefined) {
     return globalStore.__hypeToHelpDb;
@@ -86,20 +103,7 @@ export function getAdminDb() {
       return null;
     }
 
-    if (!getApps().length) {
-      const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-      const privateKey = privateKeyFromEnv();
-
-      initializeApp({
-        projectId,
-        credential:
-          clientEmail && privateKey
-            ? cert({ projectId, clientEmail, privateKey })
-            : applicationDefault()
-      });
-    }
-
-    globalStore.__hypeToHelpDb = getFirestore();
+    globalStore.__hypeToHelpDb = getFirestore(getOrInitializeDefaultApp(projectId));
     return globalStore.__hypeToHelpDb;
   } catch (error) {
     console.warn("Firestore unavailable, using demo memory store.", error);
