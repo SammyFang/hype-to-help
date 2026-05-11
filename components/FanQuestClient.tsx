@@ -154,12 +154,18 @@ export function FanQuestClient() {
           ? "Analyze"
           : "Scout";
   const rallyScore = metrics?.teamUSARallyScore ?? (scan ? 42 + completedCount * 18 : 12);
-  const stages = ["Scout", "Analyze", "Twin", "Mission", "Impact"];
+  const stages = [
+    { label: "Scout", mobileLabel: "Scout" },
+    { label: "Analyze", mobileLabel: "Scan" },
+    { label: "Twin", mobileLabel: "Twin" },
+    { label: "Mission", mobileLabel: "Mission" },
+    { label: "Impact", mobileLabel: "Impact" }
+  ];
 
   return (
-    <div className="arena-page mx-auto max-w-[96rem] px-4 py-6 sm:px-6 lg:px-8">
-      <section className="mb-5 grid gap-4 lg:grid-cols-[1fr_auto]">
-        <div className="arena-panel rounded-lg p-4 sm:p-5">
+    <div className="arena-page mx-auto max-w-[96rem] px-3 py-5 sm:px-6 lg:px-8">
+      <section className="mb-4 grid gap-4 sm:mb-5 lg:grid-cols-[1fr_auto]">
+        <div className="arena-panel rounded-lg p-3.5 sm:p-5">
           <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-3">
               <span className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-blue-300/40 bg-white/10">
@@ -167,37 +173,44 @@ export function FanQuestClient() {
               </span>
               <div className="min-w-0">
                 <p className="hud-label">Live</p>
-                <h1 className="mt-1 truncate text-3xl font-black text-white sm:text-4xl">Fan Arena</h1>
+                <h1 className="mt-1 truncate text-3xl font-black leading-tight text-white sm:text-4xl">Fan Arena</h1>
               </div>
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-md border border-blue-300/20 bg-white/10 p-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="min-w-0 rounded-md border border-blue-300/30 bg-slate-900/72 p-2.5 sm:p-3">
                 <p className="hud-label">Stage</p>
-                <p className="mt-1 text-lg font-black text-white">{activeStage}</p>
+                <p className="mt-1 truncate text-base font-black text-white sm:text-lg">{activeStage}</p>
               </div>
-              <div className="rounded-md border border-amber-300/20 bg-white/10 p-3">
-                <p className="hud-label text-amber-100">Rally Score</p>
-                <p className="mt-1 text-lg font-black text-white">{rallyScore}</p>
+              <div className="min-w-0 rounded-md border border-amber-200/35 bg-slate-900/72 p-2.5 sm:p-3">
+                <p className="hud-label text-amber-100">Rally</p>
+                <p className="mt-1 truncate text-base font-black text-white sm:text-lg">{rallyScore}</p>
               </div>
-              <div className="rounded-md border border-emerald-300/20 bg-white/10 p-3">
+              <div className="min-w-0 rounded-md border border-emerald-200/35 bg-slate-900/72 p-2.5 sm:p-3">
                 <p className="hud-label text-emerald-100">Missions</p>
-                <p className="mt-1 text-lg font-black text-white">
+                <p className="mt-1 truncate text-base font-black text-white sm:text-lg">
                   {completedCount}/{missionCount || 4}
                 </p>
               </div>
             </div>
           </div>
-          <div className="relative z-10 mt-5 grid grid-cols-5 gap-2">
+          <div className="relative z-10 mt-4 grid grid-cols-5 gap-1.5 sm:mt-5 sm:gap-2">
             {stages.map((stage, index) => {
-              const currentIndex = stages.indexOf(activeStage);
+              const currentIndex = stages.findIndex((item) => item.label === activeStage);
               const done = index <= currentIndex;
               return (
-                <div key={stage} className="min-w-0">
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border ${done ? "border-blue-200 bg-blue-500 text-white" : "border-white/15 bg-white/10 text-slate-500"}`}>
+                <div key={stage.label} className="min-w-0 text-center">
+                  <div className="mb-2 flex flex-col items-center gap-1">
+                    <span
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border ${
+                        done ? "border-blue-100 bg-blue-500 text-white" : "border-white/20 bg-slate-800 text-slate-300"
+                      }`}
+                    >
                       {done ? <CheckCircle2 aria-hidden="true" className="h-4 w-4" /> : <Gauge aria-hidden="true" className="h-4 w-4" />}
                     </span>
-                    <span className="truncate text-xs font-black text-slate-100">{stage}</span>
+                    <span className="block w-full text-[0.64rem] font-black leading-tight text-slate-100 sm:text-xs">
+                      <span className="sm:hidden">{stage.mobileLabel}</span>
+                      <span className="hidden sm:inline">{stage.label}</span>
+                    </span>
                   </div>
                   <div className="hud-meter h-1.5 rounded-md">
                     <span style={{ width: done ? "100%" : "0%" }} />
@@ -207,7 +220,7 @@ export function FanQuestClient() {
             })}
           </div>
         </div>
-        <div className="arena-panel rounded-lg p-4 sm:min-w-[16rem]">
+        <div className="arena-panel rounded-lg p-3.5 sm:min-w-[16rem] sm:p-4">
           <div className="relative z-10 flex items-center gap-3">
             <span className="grid h-12 w-12 place-items-center rounded-md bg-amber-400/20 text-amber-100">
               <Trophy aria-hidden="true" className="h-6 w-6" />

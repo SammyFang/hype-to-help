@@ -55,12 +55,16 @@
 }
 
 html {
+  width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 body {
+  width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
   background-color: var(--bg);
   background-image:
     linear-gradient(180deg, rgba(5, 10, 24, 0.54), rgba(5, 10, 24, 0.92) 48rem, rgba(5, 10, 24, 0.98)),
@@ -69,7 +73,7 @@ body {
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: var(--text);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -121,7 +125,7 @@ select {
 }
 
 .rally-muted {
-  color: var(--muted);
+  color: #d6e4f7;
 }
 
 .rally-ring {
@@ -132,6 +136,7 @@ select {
 
 .arena-page {
   position: relative;
+  width: 100%;
   isolation: isolate;
 }
 
@@ -150,12 +155,12 @@ select {
   position: relative;
   overflow: hidden;
   min-width: 0;
-  border: 1px solid rgba(92, 171, 255, 0.45);
+  border: 1px solid rgba(116, 190, 255, 0.62);
   background:
-    linear-gradient(145deg, rgba(9, 24, 58, 0.9), rgba(5, 13, 31, 0.76)),
-    linear-gradient(90deg, rgba(40, 164, 255, 0.12), rgba(232, 58, 79, 0.09));
+    linear-gradient(145deg, rgba(9, 24, 58, 0.96), rgba(4, 12, 31, 0.94)),
+    linear-gradient(90deg, rgba(40, 164, 255, 0.1), rgba(232, 58, 79, 0.07));
   box-shadow:
-    0 26px 80px rgba(0, 0, 0, 0.42),
+    0 20px 54px rgba(0, 0, 0, 0.48),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
 }
@@ -170,24 +175,25 @@ select {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, transparent, rgba(40, 164, 255, 0.18), transparent),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 6rem);
-  opacity: 0.36;
+    linear-gradient(90deg, transparent, rgba(40, 164, 255, 0.12), transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 6rem);
+  opacity: 0.22;
 }
 
 .hud-label {
-  color: #65c7ff;
-  font-size: 0.72rem;
+  color: #78d9ff;
+  font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 0;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 
 .hud-meter {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(124, 184, 255, 0.3);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(139, 200, 255, 0.45);
+  background: rgba(7, 18, 40, 0.86);
 }
 
 .hud-meter > span {
@@ -203,14 +209,16 @@ select {
   justify-content: center;
   gap: 0.45rem;
   min-width: 0;
-  border: 1px solid rgba(124, 184, 255, 0.28);
-  background: rgba(255, 255, 255, 0.09);
-  color: #eef6ff;
+  min-height: 2.5rem;
+  border: 1px solid rgba(139, 200, 255, 0.48);
+  background: rgba(21, 39, 72, 0.92);
+  color: #ffffff;
   border-radius: 0.5rem;
   padding: 0.58rem 0.72rem;
   font-size: 0.78rem;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .arena-chip:hover {
@@ -364,6 +372,30 @@ select {
   .arena-scan,
   .arena-badge::after {
     animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 480px) {
+  .arena-panel {
+    border-color: rgba(132, 203, 255, 0.7);
+    box-shadow:
+      0 16px 42px rgba(0, 0, 0, 0.46),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .hud-label {
+    font-size: 0.7rem;
+  }
+
+  .arena-chip {
+    padding: 0.54rem 0.66rem;
+    font-size: 0.74rem;
   }
 }
 

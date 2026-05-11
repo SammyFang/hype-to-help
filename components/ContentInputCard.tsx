@@ -45,13 +45,13 @@ export function ContentInputCard({
             Quest Feed
           </h2>
         </div>
-        <div className="relative z-10 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+        <div className="relative z-10 grid gap-2 sm:flex sm:flex-wrap sm:justify-end">
           {demoScenarios.map((scenario) => (
             <button
               key={scenario.id}
               type="button"
               onClick={() => onValueChange(scenario.text)}
-              className="arena-chip truncate"
+              className="arena-chip w-full sm:w-auto"
             >
               {scenario.title}
             </button>
