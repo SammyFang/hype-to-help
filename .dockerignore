@@ -1,0 +1,16 @@
+.git
+.firebase
+.next
+.playwright-cli
+node_modules
+out
+test-results
+coverage
+playwright-report
+firebase-debug.log
+firestore-debug.log
+*.tsbuildinfo
+
+.env
+.env.*
+!.env.example
