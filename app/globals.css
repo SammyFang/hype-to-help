@@ -1,0 +1,377 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #050a18;
+  --surface: rgba(8, 18, 42, 0.78);
+  --surface-strong: rgba(15, 32, 68, 0.88);
+  --text: #f8fbff;
+  --muted: #b8c8e8;
+  --border: rgba(104, 160, 255, 0.34);
+  --focus: #ffb703;
+  --navy: #101a3d;
+  --blue: #28a4ff;
+  --red: #e83a4f;
+  --gold: #ffb703;
+  --mint: #4ade80;
+  --glass: rgba(4, 12, 30, 0.74);
+  --glass-strong: rgba(6, 17, 42, 0.9);
+  --scanline: rgba(124, 184, 255, 0.13);
+}
+
+[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+  --bg: #09111f;
+  --surface: #111c30;
+  --surface-strong: #15253e;
+  --text: #f8fbff;
+  --muted: #b8c4d6;
+  --border: #32445e;
+  --focus: #ffd166;
+}
+
+[data-contrast="high"] {
+  --bg: #000000;
+  --surface: #080808;
+  --surface-strong: #101010;
+  --text: #ffffff;
+  --muted: #f0f0f0;
+  --border: #ffffff;
+  --focus: #ffff00;
+  --blue: #5ab1ff;
+  --red: #ff5a78;
+  --gold: #ffff00;
+}
+
+[data-text-size="large"] {
+  font-size: 112.5%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(180deg, rgba(5, 10, 24, 0.54), rgba(5, 10, 24, 0.92) 48rem, rgba(5, 10, 24, 0.98)),
+    linear-gradient(90deg, rgba(232, 58, 79, 0.22), transparent 24%, transparent 74%, rgba(31, 111, 235, 0.24)),
+    url("/arena-backdrop.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+body::before {
+  pointer-events: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(124, 184, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 184, 255, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, black, transparent 78%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a,
+button,
+textarea,
+input,
+select {
+  outline-color: var(--focus);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(255, 183, 3, 0.42);
+}
+
+.rally-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.rally-muted {
+  color: var(--muted);
+}
+
+.rally-ring {
+  background:
+    conic-gradient(from 210deg, #1f6feb, #ffffff 22%, #e83a4f 38%, #ffb703 54%, #1f6feb 78%, #ffffff),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.2));
+}
+
+.arena-page {
+  position: relative;
+  isolation: isolate;
+}
+
+.arena-page::before {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(40, 164, 255, 0.11), transparent 18rem),
+    linear-gradient(90deg, rgba(232, 58, 79, 0.12), transparent 30%, transparent 72%, rgba(255, 183, 3, 0.1));
+}
+
+.arena-panel {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid rgba(92, 171, 255, 0.45);
+  background:
+    linear-gradient(145deg, rgba(9, 24, 58, 0.9), rgba(5, 13, 31, 0.76)),
+    linear-gradient(90deg, rgba(40, 164, 255, 0.12), rgba(232, 58, 79, 0.09));
+  box-shadow:
+    0 26px 80px rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+}
+
+.arena-panel > * {
+  min-width: 0;
+}
+
+.arena-panel::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(40, 164, 255, 0.18), transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 6rem);
+  opacity: 0.36;
+}
+
+.hud-label {
+  color: #65c7ff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hud-meter {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(124, 184, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hud-meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #28a4ff, #4ade80, #ffb703);
+  box-shadow: 0 0 22px rgba(40, 164, 255, 0.42);
+}
+
+.arena-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 0;
+  border: 1px solid rgba(124, 184, 255, 0.28);
+  background: rgba(255, 255, 255, 0.09);
+  color: #eef6ff;
+  border-radius: 0.5rem;
+  padding: 0.58rem 0.72rem;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.arena-chip:hover {
+  border-color: rgba(124, 184, 255, 0.62);
+  background: rgba(40, 164, 255, 0.18);
+}
+
+.arena-chip[data-active="true"] {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(100deg, #1f6feb, #28a4ff 44%, #e83a4f 100%);
+  color: white;
+  box-shadow: 0 14px 36px rgba(31, 111, 235, 0.34);
+}
+
+.arena-icon-tile {
+  display: grid;
+  min-height: 5.75rem;
+  place-items: center;
+  border: 1px solid rgba(124, 184, 255, 0.28);
+  border-radius: 0.65rem;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(40, 164, 255, 0.22), transparent 58%),
+    rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.arena-badge {
+  position: relative;
+  isolation: isolate;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.24), transparent 64%),
+    conic-gradient(from 210deg, rgba(40, 164, 255, 0.75), rgba(232, 58, 79, 0.8), rgba(255, 183, 3, 0.7), rgba(40, 164, 255, 0.75));
+  box-shadow:
+    0 0 90px rgba(40, 164, 255, 0.32),
+    0 0 64px rgba(232, 58, 79, 0.2);
+}
+
+.arena-badge::before,
+.arena-badge::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: -5%;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(124, 184, 255, 0.35);
+}
+
+.arena-badge::after {
+  inset: -12%;
+  border-color: rgba(232, 58, 79, 0.25);
+  animation: arena-orbit 9s linear infinite;
+}
+
+.arena-badge img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+}
+
+.arena-scan {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: arena-scan 3.6s ease-in-out infinite;
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.clamp-3 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.arena-command {
+  background:
+    linear-gradient(100deg, #1f6feb, #28a4ff 42%, #e83a4f 100%);
+  box-shadow:
+    0 18px 48px rgba(31, 111, 235, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.arena-command:hover {
+  filter: brightness(1.08);
+}
+
+.arena-pulse {
+  animation: arena-pulse 2.8s ease-in-out infinite;
+}
+
+.arena-float {
+  animation: arena-float 5s ease-in-out infinite;
+}
+
+@keyframes arena-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes arena-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes arena-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes arena-scan {
+  0%,
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  45%,
+  55% {
+    opacity: 0.62;
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arena-float,
+  .arena-pulse,
+  .arena-scan,
+  .arena-badge::after {
+    animation: none;
+  }
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}

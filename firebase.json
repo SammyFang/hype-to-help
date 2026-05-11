@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "site": "hype-to-help",
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "firebase.fullstack.json",
+      "**/.*",
+      "**/node_modules/**",
+      "docs/**",
+      "tmp/**",
+      "output/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
