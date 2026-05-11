@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       fallback
     });
 
-    const missionRecord = await saveMissionRecord({
+    const { record: missionRecord, persistence } = await saveMissionRecord({
       ...data,
       userId: body.userId || "demo-server-user",
       analysisId: body.analysisId,
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       badges: data.missions.map((mission) => mission.badge)
     });
 
-    return NextResponse.json({ result: data, missionId: missionRecord.id, source });
+    return NextResponse.json({ result: data, missionId: missionRecord.id, source, persistence });
   } catch (error) {
     console.error("Generate mission route failed", error);
     return NextResponse.json(

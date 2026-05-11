@@ -33,14 +33,14 @@ export async function POST(request: Request) {
     });
 
     const userId = body.userId || "demo-server-user";
-    const analysis = await saveAnalysisRecord({
+    const { record: analysis, persistence } = await saveAnalysisRecord({
       ...data,
       userId,
       inputType: body.imageDataUrl && text ? "multimodal" : body.imageDataUrl ? "image" : "text",
       originalContent: text || "[image upload]"
     });
 
-    return NextResponse.json({ result: data, analysisId: analysis.id, source });
+    return NextResponse.json({ result: data, analysisId: analysis.id, source, persistence });
   } catch (error) {
     console.error("Analyze route failed", error);
     return NextResponse.json(
